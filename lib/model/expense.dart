@@ -19,7 +19,7 @@ class Expense{
 }) : id = uuid.v4();
   final String id;
   final String name;
-  final int amount;
+  final double amount;
   final DateTime date;
   final Category category;
 
@@ -27,4 +27,26 @@ class Expense{
     return formatter.format(date);
   }
 
+}
+
+
+class ExpenseBucket{
+  const ExpenseBucket({ required this.Expenses, required this.category});
+
+  ExpenseBucket.forCategory(
+      List<Expense> allExpenses,
+      this.category) :Expenses = allExpenses.where(
+          (expense) => expense.category == category)
+            .toList();
+  final Category category;
+  final List<Expense> Expenses;
+
+
+  double get totalExpenses{
+    double sum = 0;
+    for (var expense in Expenses){
+      sum += expense.amount;
+    }
+    return sum;
+  }
 }
